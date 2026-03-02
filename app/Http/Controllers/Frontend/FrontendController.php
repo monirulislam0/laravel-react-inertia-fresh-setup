@@ -8,8 +8,12 @@ use Inertia\Response;
 
 class FrontendController extends Controller
 {
-    public function index(): Response
+    public function Index(): Response
     {
-        return Inertia::render('frontend/home');
+        return Inertia::render('frontend/index');
+    }
+    public function Test(): Response
+    {
+        return Inertia::render('frontend/test');
     }
 }

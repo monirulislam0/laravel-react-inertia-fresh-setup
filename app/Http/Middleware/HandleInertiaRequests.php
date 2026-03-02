@@ -32,26 +32,6 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'auth' => [
-                'user' => $user ? array_merge(
-                    $user->only([
-                        'id',
-                        'email',
-                        'name',
-                        'phone_number',
-                        'employee_code',
-                        'avatar',
-                    ]),
-                    [
-                        'name' => $this->displayName($user),
-                        'role' => $user->role?->value,
-                        'role_label' => $user->role_label,
-                        'is_admin' => $user->isAdmin(),
-                        'can_manage_users' => $user->canManageUsers(),
-                        'avatar_url' => $user->avatar_url,
-                    ]
-                ) : null,
-            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'features' => [
                 // 'canRegister' => Features::enabled(Features::registration()),
