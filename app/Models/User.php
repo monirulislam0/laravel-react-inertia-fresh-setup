@@ -24,7 +24,6 @@ class User extends Authenticatable
         'email',
         'avatar',
         'password',
-        'is_admin',
         'has_completed_onboarding',
         'created_at',
         'updated_at',
@@ -62,7 +61,6 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
-            'is_admin' => 'boolean',
             'has_completed_onboarding' => 'boolean',
             'is_payroll' => 'boolean',
             'is_trusted' => 'boolean',
@@ -111,25 +109,12 @@ class User extends Authenticatable
         return $this->role?->label() ?? 'Unknown';
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->role === UserRole::ADMIN || $this->is_admin === true;
-    }
 
     public function isUser(): bool
     {
         return $this->role === UserRole::USER;
     }
 
-    public function canManageUsers(): bool
-    {
-        return $this->isAdmin();
-    }
-
-    public function getCanManageUsersAttribute(): bool
-    {
-        return $this->canManageUsers();
-    }
 
     public function canAccessPayroll(): bool
     {
@@ -185,7 +170,6 @@ class User extends Authenticatable
                 'positions' => $userData['positions'] ?? [],
                 'locations' => $userData['locations'] ?? [],
                 'avatar_urls' => $userData['avatar'] ?? null,
-                'is_admin' => ($userData['role'] ?? 3) === 1,
             ]
         );
 
